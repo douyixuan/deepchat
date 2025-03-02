@@ -57,6 +57,7 @@ export class ConfigPresenter implements IConfigPresenter {
     })
 
     this.userDataPath = app.getPath('userData')
+    console.log('userDataPath', this.userDataPath)
     this.initProviderModelsDir()
 
     const existingProviders = this.getSetting<LLM_PROVIDER[]>(PROVIDERS_STORE_KEY) || []
@@ -68,6 +69,9 @@ export class ConfigPresenter implements IConfigPresenter {
     if (newProviders.length > 0) {
       this.setProviders([...existingProviders, ...newProviders])
     }
+
+    // Add Ollama auto-detection
+    this.detectOllamaAutoDetection()
 
     // 迁移旧的模型数据
     this.migrateModelData()
@@ -387,5 +391,32 @@ export class ConfigPresenter implements IConfigPresenter {
 
     // 默认返回英文
     return 'en-US'
+  }
+
+  private detectOllamaAutoDetection(): void {
+    const port = 11434;
+    const host = 'localhost'; // 本地地址
+
+    const net = require('net');
+    const client = new net.Socket();
+
+    client.setTimeout(2000); // 设置超时时间为 2 秒
+
+    client.connect(port, host, () => {
+      console.log('Ollama service is running');
+      // 这里可以添加代码来处理服务运行的情况，例如更新状态或通知用户
+      eventBus.emit(CONFIG_EVENTS.PROVIDER_OLLAMA_DETECTED);
+      client.destroy(); // 连接成功后关闭客户端
+    });
+
+    client.on('error', (err) => {
+      console.log('Ollama service is not running:', err.message);
+      // 这里可以添加代码来处理服务未运行的情况
+    });
+
+    client.on('timeout', () => {
+      console.log('Connection to Ollama service timed out');
+      client.destroy(); // 超时后关闭客户端
+    });
   }
 }

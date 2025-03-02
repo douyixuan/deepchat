@@ -1,0 +1,38 @@
+{
+  "settings": {
+    "provider": {
+      "ollama": {
+        "title": "Ollama",
+        "description": "Configure Ollama local LLM provider",
+        "serverSettings": "Server Settings",
+        "serverUrl": "Ollama Server URL",
+        "serverUrlPlaceholder": "http://localhost:11434",
+        "welcomeTitle": "Welcome to Ollama Integration",
+        "welcomeDescription": "Ollama allows you to run powerful large language models locally on your computer. Get started by configuring your connection to the Ollama server.",
+        "getStarted": "Get Started",
+        "connected": "Connected",
+        "disconnected": "Disconnected",
+        "connectionError": "Failed to connect to Ollama server",
+        "refreshError": "Failed to refresh models",
+        "modelUpdateError": "Failed to update model status",
+        "batchUpdateError": "Failed to update multiple models",
+        "availableModels": "Available Models",
+        "noModels": "No models found. Please ensure Ollama is running and models are installed.",
+        "loading": "Loading models...",
+        "connectionSuccess": "Successfully connected to Ollama server",
+        "detectService": "Detect Service",
+        "selectModels": "Select Models",
+        "startChat": "Start Chat",
+        "selectModelsDescription": "Select the models you want to use for chat"
+      },
+      "check": "Check Connection",
+      "checking": "Checking...",
+      "refresh": "Refresh Models",
+      "refreshing": "Refreshing...",
+      "enableAll": "Enable All",
+      "disableAll": "Disable All",
+      "next": "Next",
+      "back": "Back"
+    }
+  }
+}

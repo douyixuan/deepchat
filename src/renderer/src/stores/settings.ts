@@ -5,6 +5,7 @@ import { usePresenter } from '@/composables/usePresenter'
 import { useI18n } from 'vue-i18n'
 import { SearchEngineTemplate } from '@shared/chat'
 import { CONFIG_EVENTS, UPDATE_EVENTS } from '@/events'
+import { useRouter } from 'vue-router'
 
 export const useSettingsStore = defineStore('settings', () => {
   const configP = usePresenter('configPresenter')
@@ -27,6 +28,8 @@ export const useSettingsStore = defineStore('settings', () => {
   const isChecking = ref(false)
   const searchEngines = ref<SearchEngineTemplate[]>([])
   const activeSearchEngine = ref<string>('google')
+
+  const router = useRouter()
 
   // 搜索助手模型相关
   const searchAssistantModelRef = ref<RENDERER_MODEL_META | null>(null)
@@ -359,6 +362,7 @@ export const useSettingsStore = defineStore('settings', () => {
       CONFIG_EVENTS.MODEL_STATUS_CHANGED,
       async (_event, msg: { providerId: string; modelId: string; enabled: boolean }) => {
         // 只更新模型启用状态，而不是刷新所有模型
+        console.log('Model status changed:', msg)
         updateLocalModelStatus(msg.providerId, msg.modelId, msg.enabled)
       }
     )
