@@ -31,7 +31,8 @@
     "settings": "Settings",
     "settings-common": "Common Settings",
     "settings-provider": "Provider Settings",
-    "settings-about": "About"
+    "settings-about": "About",
+    "settings-ollama": "Ollama"
   },
   "chat": {
     "input": {
@@ -203,6 +204,22 @@
           "confirm": "Delete"
         }
       }
+    },
+    "ollama": {
+      "title": "Ollama Configuration",
+      "serverUrl": "Server URL",
+      "checkConnection": "Check Connection",
+      "checking": "Checking...",
+      "connected": "Connected successfully",
+      "availableModels": "Available Models",
+      "modelsFound": "models found",
+      "noModelsFound": "No models found. Please install models using the Ollama CLI.",
+      "connectionSuccess": "Successfully connected to Ollama server",
+      "detectService": "Detect Service",
+      "selectModels": "Select Models",
+      "startChat": "Start Chat",
+      "selectModelsDescription": "Select the models you want to use for chat",
+      "loading": "Loading..."
     }
   },
   "welcome": {

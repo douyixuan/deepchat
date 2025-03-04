@@ -103,6 +103,13 @@ export class Presenter implements IPresenter {
         })
       }
     )
+    eventBus.on(
+      CONFIG_EVENTS.PROVIDER_OLLAMA_DETECTED,
+      () => {
+        console.log("send event ollama detected")
+        this.windowPresenter.mainWindow?.webContents.send(CONFIG_EVENTS.PROVIDER_OLLAMA_DETECTED, {})
+      }
+    )
 
     // 更新相关事件
     eventBus.on(UPDATE_EVENTS.STATUS_CHANGED, (msg) => {

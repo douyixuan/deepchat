@@ -13,6 +13,7 @@ export const CONFIG_EVENTS = {
   MODEL_LIST_CHANGED: 'config:model-list-changed', // 替代 provider-models-updated（ConfigPresenter）
   MODEL_STATUS_CHANGED: 'config:model-status-changed', // 替代 model-status-changed（ConfigPresenter）
   SETTING_CHANGED: 'config:setting-changed' // 替代 setting-changed（ConfigPresenter）
+  PROVIDER_OLLAMA_DETECTED: 'config:provider-ollama-detected',
 }
 
 // 会话相关事件

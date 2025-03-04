@@ -3,7 +3,9 @@ import { onMounted, ref, watch } from 'vue'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import AppBar from './components/AppBar.vue'
 import SideBar from './components/SideBar.vue'
+import OllamaProviderConfig from './components/settings/OllamaProviderConfig.vue'
 import { usePresenter } from './composables/usePresenter'
+
 const route = useRoute()
 const configPresenter = usePresenter('configPresenter')
 

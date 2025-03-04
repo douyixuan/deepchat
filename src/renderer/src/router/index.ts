@@ -52,6 +52,15 @@ const router = createRouter({
           }
         },
         {
+          path: 'ollama',
+          name: 'settings-ollama',
+          component: () => import('@/components/settings/OllamaProviderConfig.vue'),
+          meta: {
+            titleKey: 'routes.settings-ollama',
+            icon: 'lucide:server'
+          }
+        },
+        {
           path: 'about',
           name: 'settings-about',
           component: () => import('@/components/settings/AboutUsSettings.vue'),
