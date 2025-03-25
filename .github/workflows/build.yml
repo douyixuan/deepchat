@@ -47,7 +47,9 @@ jobs:
         with:
           name: deepchat-${{ matrix.platform }}
           path: |
-            dist/*
+            dist/*.exe
+            dist/*.msi
+            dist/*.zip
             !dist/win-unpacked
 
   build-linux:
@@ -81,5 +83,8 @@ jobs:
         with:
           name: deepchat-${{ matrix.platform }}
           path: |
-            dist/*
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.tar.gz
             !dist/linux-unpacked
