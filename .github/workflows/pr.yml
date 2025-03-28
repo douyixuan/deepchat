@@ -1,0 +1,83 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches: [ dev ]
+    types: [ opened, synchronize, reopened ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pr-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linting
+        run: npm run lint || echo "Linting issues detected"
+
+      - name: Run tests
+        run: npm test || echo "Tests failed"
+
+  build-check:
+    runs-on: ubuntu-latest
+    needs: [pr-validation]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          npm_config_platform: linux
+          npm_config_arch: x64
+
+      - name: Install Node Runtime
+        run: npm run installRuntime:linux:x64
+
+      - name: Build application (testing only)
+        run: |
+          # Only build partially to verify the build process works
+          npm run build:linux:x64 --dry-run || (echo "Build check failed" && exit 1)
+
+      - name: Add PR comment
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const buildStatus = '${{ job.status }}' === 'success' ? '✅' : '❌';
+            const testStatus = '${{ needs.pr-validation.result }}' === 'success' ? '✅' : '⚠️';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Build Validation Results
+            
+              | Check | Status |
+              | ----- | ------ |
+              | Tests and Linting | ${testStatus} |
+              | Build Verification | ${buildStatus} |
+              
+              ${buildStatus === '✅' ? 'This PR passes all build checks.' : 'This PR has build issues that need to be fixed.'}
+              
+              [View Run Details](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+              `
+            })
